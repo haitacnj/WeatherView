@@ -24,6 +24,7 @@ public class WeatherView extends View {
     protected double y;
     protected double runSpacing;
     protected NaturalObject sun;
+    protected NaturalObject moon;
 
     public WeatherView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -35,6 +36,7 @@ public class WeatherView extends View {
         ct = context;
         x = 0;
         sun = new Sun(context);
+        moon = new Moon(context);
 
     }
 
@@ -50,12 +52,14 @@ public class WeatherView extends View {
         h = MeasureSpec.getSize(heightMeasureSpec);
 
         sun.setSkyDimen(new kSize((int) w, (int) h));
+        moon.setSkyDimen(new kSize((int) w, (int) h));
 
     }
 
     public void timeStick(int i) {
 
         sun.prepare(i);
+        moon.prepare(i);
 
         invalidate();
     }
@@ -65,5 +69,6 @@ public class WeatherView extends View {
         super.onDraw(canvas);
         paint.setColor(Color.YELLOW);
         sun.emotes(canvas, paint);
+        moon.emotes(canvas, paint);
     }
 }

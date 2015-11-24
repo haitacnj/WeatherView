@@ -65,7 +65,7 @@ public class MainActivity extends Activity {
             }
         };
 
-        timer.schedule(timerTask, 1000, 60 * 1000);
+        timer.schedule(timerTask, 100, 60 * 1000);
     }
 
     @Override

@@ -9,5 +9,5 @@
         android:id="@+id/weatherView"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="#eefF"></com.example.khoa.ui.WeatherView>
+        android:background="@mipmap/noon"></com.example.khoa.ui.WeatherView>
 </LinearLayout>

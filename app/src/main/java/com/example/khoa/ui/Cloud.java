@@ -31,11 +31,6 @@ public class Cloud extends NaturalObject {
     }
 
     @Override
-    protected void prepareShows() {
-
-    }
-
-    @Override
     protected void setSkyDimen(kSize ksize) {
 
     }

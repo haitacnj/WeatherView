@@ -27,12 +27,7 @@ public class Wind extends NaturalObject {
     protected void prepare(int i) {
 
     }
-
-    @Override
-    protected void prepareShows() {
-
-    }
-
+    
     @Override
     protected void setSkyDimen(kSize ksize) {
 

@@ -26,7 +26,7 @@ public class Sun extends NaturalObject {
 
     public Sun(Context context) {
         super(context);
-        bitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.sun0);
+        bitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.sun);
         runSpacing = 0;
         where = new PointF();
         skyDimen = new kSize(0, 0);
