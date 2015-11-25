@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import com.example.khoa.support.kSize;
@@ -50,6 +51,8 @@ public class WeatherView extends View {
 
         w = MeasureSpec.getSize(widthMeasureSpec);
         h = MeasureSpec.getSize(heightMeasureSpec);
+
+        Log.d( "Dimen","width : "+w + " : Height: " + h );
 
         sun.setSkyDimen(new kSize((int) w, (int) h));
         moon.setSkyDimen(new kSize((int) w, (int) h));

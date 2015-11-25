@@ -1,13 +1,21 @@
-<LinearLayout xmlns:android='http://schemas.android.com/apk/res/android'
+<RelativeLayout xmlns:android='http://schemas.android.com/apk/res/android'
     xmlns:tools='http://schemas.android.com/tools'
     android:layout_width='match_parent'
     android:layout_height='match_parent'
-    android:background="#999"
-    android:orientation='vertical'>
+    android:background="#999">
 
     <com.example.khoa.ui.WeatherView
         android:id="@+id/weatherView"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:background="@mipmap/noon"></com.example.khoa.ui.WeatherView>
-</LinearLayout>
+
+    <ImageView
+        android:id="@+id/cloudImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:alpha="0.5"
+        android:src="@mipmap/cloud" />
+
+</RelativeLayout>
