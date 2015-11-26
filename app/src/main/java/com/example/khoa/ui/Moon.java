@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PointF;
+import android.util.Log;
 
 import com.example.khoa.support.kSize;
 import com.example.khoa.weatherview.R;
@@ -26,7 +27,7 @@ public class Moon extends NaturalObject {
         super(ct);
         bitmap = BitmapFactory.decodeResource(ct.getResources(), R.mipmap.moon);
         runSpacing = 0;
-        where = new PointF();
+        where = new PointF(-1, -1);
         skyDimen = new kSize(0, 0);
     }
 
@@ -36,22 +37,36 @@ public class Moon extends NaturalObject {
             return;
         }
 
+        if (where.x == -1 && where.y == -1) {
+            Calendar cal = Calendar.getInstance();
+            int hour = cal.get(Calendar.HOUR_OF_DAY);
+            int minute = cal.get(Calendar.MINUTE);
+            int minusInDay = hour * 60 + minute;
+
+            if (360 >= minusInDay || minusInDay >= 1080) {
+                Log.d("Minute delay", "" + minusInDay);
+                prepare(minusInDay);
+            } else {
+                return;
+            }
+        }
+
         canvas.drawBitmap(finalBitmap, (float) where.x - t / 2, (float) where.y - t / 2, p);
     }
 
 
     @Override
     protected void prepare(int i) {
-        if (i <= 360){
+        if (i <= 360) {
             where.x = (i + 360) * runSpacing;
             where.y = a * where.x * where.x + b * where.x + c;
             areUHere(NaturalAppear.full);
         } else {
-            if( i >= 1080){
+            if (i >= 1080) {
                 where.x = (i - 1080) * runSpacing;
                 where.y = a * where.x * where.x + b * where.x + c;
                 areUHere(NaturalAppear.full);
-            }else {
+            } else {
                 where.x = 0;
                 where.y = skyDimen.height;
                 areUHere(NaturalAppear.hide);
@@ -76,8 +91,8 @@ public class Moon extends NaturalObject {
         b = (16 * t - 4 * c) / (2 * t - t * t / skyDimen.width);
         a = (16 * t - 4 * c) / (t * t - 2 * t * skyDimen.width);
 
-        where.x = 0;
-        where.y = c;
+//        where.x = 0;
+//        where.y = c;
 
         finalBitmap = Bitmap.createScaledBitmap(bitmap, (int) t, (int) t, false);
     }

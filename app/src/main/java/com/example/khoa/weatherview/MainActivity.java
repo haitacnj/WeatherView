@@ -3,7 +3,6 @@ package com.example.khoa.weatherview;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.webkit.JavascriptInterface;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -46,9 +45,10 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
 
+
         Calendar startCal = Calendar.getInstance();
         int timeDelay = (60 - startCal.get(Calendar.SECOND)) * 1000;
-        Log.d("Time delay", "" + timeDelay);
+        weatherView.checkState(startCal.get(Calendar.HOUR_OF_DAY) * 60 + startCal.get(Calendar.MINUTE));
 
         timerTask = new TimerTask() {
             @Override
@@ -62,7 +62,6 @@ public class MainActivity extends Activity {
                             int hour = cal.get(Calendar.HOUR_OF_DAY);
                             int minute = cal.get(Calendar.MINUTE);
                             int minusInDay = hour * 60 + minute;
-                            Log.d("Minute delay", "" + minusInDay);
                             weatherView.timeStick(minusInDay);
                         }
                     }
@@ -78,7 +77,6 @@ public class MainActivity extends Activity {
                     @Override
                     public void run() {
 
-                        Log.d("Run", "");
                         float left = cloudImage.getX();
                         if (left > 1080)
                             left = -304;
@@ -88,7 +86,7 @@ public class MainActivity extends Activity {
             }
         };
 
-        timer.schedule(timerTask, 100, 60 * 1000);
+        timer.schedule(timerTask, timeDelay, 60 * 1000);
         timer.schedule(cloudTimer, 100, 100);
     }
 

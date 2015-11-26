@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.khoa.support.kSize;
+import com.example.khoa.weatherview.R;
 
 /**
  * Created by Khoa on 11/14/2015.
@@ -52,7 +53,7 @@ public class WeatherView extends View {
         w = MeasureSpec.getSize(widthMeasureSpec);
         h = MeasureSpec.getSize(heightMeasureSpec);
 
-        Log.d( "Dimen","width : "+w + " : Height: " + h );
+        Log.d("Dimen", "width : " + w + " : Height: " + h);
 
         sun.setSkyDimen(new kSize((int) w, (int) h));
         moon.setSkyDimen(new kSize((int) w, (int) h));
@@ -73,5 +74,13 @@ public class WeatherView extends View {
         paint.setColor(Color.YELLOW);
         sun.emotes(canvas, paint);
         moon.emotes(canvas, paint);
+    }
+
+    public void checkState(int totalMinute) {
+        if (360 < totalMinute && totalMinute < 1080) {
+            setBackgroundResource(R.mipmap.noon);
+        } else {
+            setBackgroundResource(R.mipmap.night);
+        }
     }
 }

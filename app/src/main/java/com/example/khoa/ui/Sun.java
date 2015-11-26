@@ -6,8 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PointF;
-import android.util.Size;
-import android.util.SizeF;
+import android.util.Log;
 
 import com.example.khoa.support.kSize;
 import com.example.khoa.weatherview.R;
@@ -28,7 +27,8 @@ public class Sun extends NaturalObject {
         super(context);
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.sun);
         runSpacing = 0;
-        where = new PointF();
+        where = new PointF(-1, -1);
+
         skyDimen = new kSize(0, 0);
     }
 
@@ -37,6 +37,20 @@ public class Sun extends NaturalObject {
         // draw my love ...^^
         if (appear == NaturalAppear.hide) {
             return;
+        }
+
+        if (where.x == -1 && where.y == -1) {
+            Calendar cal = Calendar.getInstance();
+            int hour = cal.get(Calendar.HOUR_OF_DAY);
+            int minute = cal.get(Calendar.MINUTE);
+            int minusInDay = hour * 60 + minute;
+
+            if (360 < minusInDay && minusInDay < 1080) {
+                Log.d("Minute delay", "" + minusInDay);
+                prepare(minusInDay);
+            }else {
+                return;
+            }
         }
 
         canvas.drawBitmap(finalBitmap, (float) where.x - t / 2, (float) where.y - t / 2, paint);
@@ -52,10 +66,6 @@ public class Sun extends NaturalObject {
         c = (float) ((2 * Math.pow(t, 5) - 8 * skyDimen.width * Math.pow(t, 4) + 16 * Math.pow((float) skyDimen.width, 2) * Math.pow(t, 3) - 16 * Math.pow((float) skyDimen.width, 3) * Math.pow(t, 2)) / (10 * Math.pow((float) skyDimen.width, 2) * Math.pow(t, 2) - 4 * Math.pow((float) skyDimen.width, 3) * t - 8 * (float) skyDimen.width * Math.pow(t, 3) + 2 * Math.pow(t, 4)));
         b = (16 * t - 4 * c) / (2 * t - t * t / skyDimen.width);
         a = (16 * t - 4 * c) / (t * t - 2 * t * skyDimen.width);
-
-        where.x = 0;
-        where.y = c;
-
         finalBitmap = Bitmap.createScaledBitmap(bitmap, (int) t, (int) t, false);
     }
 
