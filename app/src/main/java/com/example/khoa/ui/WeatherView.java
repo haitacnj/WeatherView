@@ -5,16 +5,18 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.example.khoa.support.kSize;
 import com.example.khoa.weatherview.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Khoa on 11/14/2015.
  */
-public class WeatherView extends View {
+public class WeatherView extends RelativeLayout {
 
     protected float w;
     protected float h;
@@ -27,6 +29,7 @@ public class WeatherView extends View {
     protected double runSpacing;
     protected NaturalObject sun;
     protected NaturalObject moon;
+    protected List<Cloud> clouds;
 
     public WeatherView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -39,7 +42,15 @@ public class WeatherView extends View {
         x = 0;
         sun = new Sun(context);
         moon = new Moon(context);
+        clouds = new ArrayList<>();
+        initialCloud();
+    }
 
+    private void initialCloud() {
+
+        Cloud c = new Cloud(ct);
+        addView(c.texture);
+        clouds.add(c);
     }
 
     public WeatherView(Context context) {
@@ -53,19 +64,20 @@ public class WeatherView extends View {
         w = MeasureSpec.getSize(widthMeasureSpec);
         h = MeasureSpec.getSize(heightMeasureSpec);
 
-        Log.d("Dimen", "width : " + w + " : Height: " + h);
-
         sun.setSkyDimen(new kSize((int) w, (int) h));
         moon.setSkyDimen(new kSize((int) w, (int) h));
-
     }
 
-    public void timeStick(int i) {
-
+    public void objectStick(int i) {
         sun.prepare(i);
         moon.prepare(i);
-
         invalidate();
+    }
+
+    public void cloudStick() {
+        for (Cloud cloud : clouds) {
+            cloud.emotes(null, null);
+        }
     }
 
     @Override

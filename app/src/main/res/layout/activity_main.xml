@@ -10,19 +10,19 @@
         android:layout_height="200dp"
         android:background="@mipmap/noon"></com.example.khoa.ui.WeatherView>
 
-    <ImageView
-        android:id="@+id/cloudImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:alpha="0.7"
-        android:src="@mipmap/cloud" />
+    <!--<ImageView-->
+        <!--android:id="@+id/cloudImage"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="100dp"-->
+        <!--android:alpha="0.7"-->
+        <!--android:src="@mipmap/cloud" />-->
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="70dp"
-        android:src="@mipmap/cloud2" />
+    <!--<ImageView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginTop="70dp"-->
+        <!--android:src="@mipmap/cloud2" />-->
 
 </RelativeLayout>

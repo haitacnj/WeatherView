@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.webkit.JavascriptInterface;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.khoa.ui.WeatherView;
@@ -15,12 +14,10 @@ import java.util.TimerTask;
 
 public class MainActivity extends Activity {
 
-
     protected Timer timer;
     protected TimerTask timerTask;
     protected TimerTask cloudTimer;
     protected WeatherView weatherView;
-    protected ImageView cloudImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +35,6 @@ public class MainActivity extends Activity {
     private void initiation() {
         timer = new Timer();
         weatherView = (WeatherView) findViewById(R.id.weatherView);
-        cloudImage = (ImageView) findViewById(R.id.cloudImage);
     }
 
     @Override
@@ -47,7 +43,6 @@ public class MainActivity extends Activity {
 
 
         Calendar startCal = Calendar.getInstance();
-        int timeDelay = (60 - startCal.get(Calendar.SECOND)) * 1000;
         weatherView.checkState(startCal.get(Calendar.HOUR_OF_DAY) * 60 + startCal.get(Calendar.MINUTE));
 
         timerTask = new TimerTask() {
@@ -62,7 +57,7 @@ public class MainActivity extends Activity {
                             int hour = cal.get(Calendar.HOUR_OF_DAY);
                             int minute = cal.get(Calendar.MINUTE);
                             int minusInDay = hour * 60 + minute;
-                            weatherView.timeStick(minusInDay);
+                            weatherView.objectStick(minusInDay);
                         }
                     }
                 });
@@ -76,17 +71,13 @@ public class MainActivity extends Activity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-
-                        float left = cloudImage.getX();
-                        if (left > 1080)
-                            left = -304;
-                        cloudImage.setX(left + (float) 0.5);
+                        weatherView.cloudStick();
                     }
                 });
             }
         };
 
-        timer.schedule(timerTask, timeDelay, 60 * 1000);
+        timer.schedule(timerTask, 0, 60 * 1000);
         timer.schedule(cloudTimer, 100, 100);
     }
 

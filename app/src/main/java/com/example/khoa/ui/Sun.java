@@ -48,7 +48,7 @@ public class Sun extends NaturalObject {
             if (360 < minusInDay && minusInDay < 1080) {
                 Log.d("Minute delay", "" + minusInDay);
                 prepare(minusInDay);
-            }else {
+            } else {
                 return;
             }
         }
@@ -72,6 +72,8 @@ public class Sun extends NaturalObject {
     @Override
     protected void prepare(int i) {
         // if i in range hidden --->  areUHere(NaturalAppear.hide);
+        if (runSpacing == 0)
+            return;
 
         if (360 < i && i < 1080) {
             where.x = (i - 360) * runSpacing;
