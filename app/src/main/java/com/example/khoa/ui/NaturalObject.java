@@ -5,12 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PointF;
-import android.util.Size;
-import android.util.SizeF;
 
 import com.example.khoa.support.kSize;
-
-import java.util.Calendar;
 
 /**
  * Created by Khoa on 11/14/2015.
@@ -66,12 +62,15 @@ public abstract class NaturalObject {
     }
 
 
-//    public enum NaturalSize {
-//        small,
-//        rather,
-//        big,
-//        huge
-//    }
+    public enum NaturalSize {
+        small,
+        rather,
+        big,
+        huge
+    }
 
+    public interface cloudState {
+        public int updateCloud(int type);
+    }
 
 }

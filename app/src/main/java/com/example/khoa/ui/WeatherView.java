@@ -5,18 +5,23 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.RelativeLayout;
 
 import com.example.khoa.support.kSize;
 import com.example.khoa.weatherview.R;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
+import java.util.Set;
 
 /**
  * Created by Khoa on 11/14/2015.
  */
-public class WeatherView extends RelativeLayout {
+public class WeatherView extends RelativeLayout implements NaturalObject.cloudState {
 
     protected float w;
     protected float h;
@@ -30,6 +35,8 @@ public class WeatherView extends RelativeLayout {
     protected NaturalObject sun;
     protected NaturalObject moon;
     protected List<Cloud> clouds;
+    protected boolean isNight;
+    protected Set<Integer> mySet;
 
     public WeatherView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -43,14 +50,27 @@ public class WeatherView extends RelativeLayout {
         sun = new Sun(context);
         moon = new Moon(context);
         clouds = new ArrayList<>();
+        isNight = false;
         initialCloud();
     }
 
     private void initialCloud() {
 
-        Cloud c = new Cloud(ct);
-        addView(c.texture);
-        clouds.add(c);
+        Random r = new Random();
+
+        mySet = new HashSet<Integer>();
+        while (mySet.size() < 3) {
+            int idx = r.nextInt(20);
+            Log.d("random value", "" + idx);
+            mySet.add(idx);
+        }
+
+        for (Integer i : mySet) {
+            Cloud c = new Cloud(ct, i, this);
+            addView(c.texture);
+            clouds.add(c);
+        }
+
     }
 
     public WeatherView(Context context) {
@@ -90,9 +110,44 @@ public class WeatherView extends RelativeLayout {
 
     public void checkState(int totalMinute) {
         if (360 < totalMinute && totalMinute < 1080) {
-            setBackgroundResource(R.mipmap.noon);
+            //setBackgroundResource(R.mipmap.noon);
+            //setBackgroundColor(Color.WHITE);
+            setBackgroundResource(R.color.blue_sky);
+            isNight = false;
         } else {
             setBackgroundResource(R.mipmap.night);
+            isNight = true;
         }
+    }
+
+
+    @Override
+    public int updateCloud(int type) {
+
+        Iterator<Integer> neighboursItr = mySet.iterator();
+        while (neighboursItr.hasNext()) {
+            // try disconnecting vertices
+            int neighbour = neighboursItr.next();
+            if (neighbour == type) {
+                neighboursItr.remove();
+                break;
+            }
+        }
+
+//        for (Integer i : mySet) {
+//            if (i == type) {
+//                mySet.remove(i);
+//                break;
+//            }
+//        }
+
+        int idx = -1;
+        Random r = new Random();
+        while (mySet.size() < 3) {
+            idx = r.nextInt(20);
+            mySet.add(idx);
+        }
+
+        return idx;
     }
 }

@@ -78,7 +78,7 @@ public class MainActivity extends Activity {
         };
 
         timer.schedule(timerTask, 0, 60 * 1000);
-        timer.schedule(cloudTimer, 100, 100);
+        timer.schedule(cloudTimer, 100, 200);
     }
 
     @Override
